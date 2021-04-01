@@ -2,6 +2,8 @@ package com.algaworks.multidb.model.app;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -14,7 +16,8 @@ import lombok.Data;
 public class Livro {
 
 	@Id
-	private Long codigo;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer codigo;
 
 	private String titulo;
 
@@ -26,5 +29,5 @@ public class Livro {
 	private String nomeUsuario;
 	
 	@Transient
-	private Long codigoUsuario;
+	private Integer codigoUsuario;
 }

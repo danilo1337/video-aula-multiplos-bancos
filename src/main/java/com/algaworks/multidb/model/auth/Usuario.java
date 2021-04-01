@@ -1,6 +1,8 @@
 package com.algaworks.multidb.model.auth;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,7 +14,8 @@ import lombok.Data;
 public class Usuario {
 
 	@Id
-	private Long codigo;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer codigo;
 
 	private String nome;
 
