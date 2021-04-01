@@ -10,14 +10,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.algaworks.multidb.repository.app.LivroRepository;
 
 @Configuration
 @EnableJpaRepositories(
 		basePackageClasses = LivroRepository.class,
-		entityManagerFactoryRef = "appEntityManager")
+		entityManagerFactoryRef = "appEntityManager",
+		transactionManagerRef= "appTransactionManager")
 public class AppDbConfig {
 	
 	@Bean
@@ -36,6 +39,13 @@ public class AppDbConfig {
 				.dataSource(dataSource)
 				.packages("com.algaworks.multidb.model.app")
 				.build();
+	}
+	
+	@Bean
+	@Primary
+	public PlatformTransactionManager appTransactionManager(
+	            final @Qualifier("appEntityManager") LocalContainerEntityManagerFactoryBean appEntityManagerFactory) {
+	        return new JpaTransactionManager(appEntityManagerFactory.getObject());
 	}
 	
 }
